@@ -4,10 +4,9 @@ object CoffeeWizard extends App {
   val system = ActorSystem("CoffeeWizard")
 
   val requestAcceptor = system.actorOf(Props[RequestAcceptor], "RequestAcceptor")
+  val johndoe = system.actorOf(Props(classOf[Programmer], requestAcceptor), "JohnDoeTheProgrammer")
 
-  requestAcceptor ! EspressoRequest
-  requestAcceptor ! LatteRequest
-  println("I have ordered espresso and latte, and it doesn't work!")
-
-  system.shutdown()
+  johndoe ! TimeToDoSomeWork
+  johndoe ! WakeUp
+  requestAcceptor ! ShutdownRequest
 }
